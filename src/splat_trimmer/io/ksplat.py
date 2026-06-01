@@ -38,7 +38,7 @@ def load_ksplat(path: str | Path) -> Cloud:
             "with compression level 0 (raw float32) using the upstream KSplat tools."
         )
 
-    bps = 44  # pos12 + scale12 + rot16 + rgba4 at compression 0
+    # Section format: pos12 + scale12 + rot16 + rgba4 at compression 0 (bps=44)
     cursor = KSPLAT_HEADER_BYTES
     sections: list[np.ndarray] = []
     for _ in range(section_count):
@@ -47,7 +47,6 @@ def load_ksplat(path: str | Path) -> Cloud:
         block = np.frombuffer(raw, dtype=np.uint8, count=s_count * s_bps, offset=cursor)
         sections.append(block.reshape(s_count, s_bps))
         cursor += s_count * s_bps
-        bps = s_bps
 
     if not sections:
         empty = np.zeros((0, 3), dtype=np.float32)
