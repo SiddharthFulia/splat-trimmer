@@ -98,15 +98,17 @@ def trim(
         cloud = drop_outliers(cloud, percentile=drop)
         console.print(f"After --drop-outliers {drop}: {cloud.count:,} splats")
 
+    mn: np.ndarray | None
+    mx: np.ndarray | None
     if aabb is not None:
         mn, mx = _parse_aabb(aabb)
     elif percentile is not None:
         mn, mx = compute_aabb(cloud.positions, percentile=percentile)
         console.print(f"Auto AABB (p={percentile}): {mn.tolist()} -> {mx.tolist()}")
     else:
-        mn, mx = None, None  # type: ignore[assignment]
+        mn, mx = None, None
 
-    if mn is not None:
+    if mn is not None and mx is not None:
         cloud = crop_aabb(cloud, mn, mx)
         console.print(f"After AABB crop: {cloud.count:,} splats")
 

@@ -15,7 +15,8 @@ def aabb_mask(
     mn_a = np.asarray(mn)
     mx_a = np.asarray(mx)
     inside = np.all((positions >= mn_a) & (positions <= mx_a), axis=1)
-    return inside.astype(np.bool_)
+    mask: NDArray[np.bool_] = inside.astype(np.bool_)
+    return mask
 
 
 def crop_aabb(

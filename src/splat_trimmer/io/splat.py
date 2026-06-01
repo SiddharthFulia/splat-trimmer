@@ -10,12 +10,14 @@ SPLAT_STRIDE = 32  # bytes per splat (pos12 + scale12 + rgba4 + quat4)
 
 
 def _sigmoid(x: np.ndarray) -> np.ndarray:
-    return 1.0 / (1.0 + np.exp(-x))
+    out: np.ndarray = 1.0 / (1.0 + np.exp(-x))
+    return out
 
 
 def _logit(p: np.ndarray, eps: float = 1e-6) -> np.ndarray:
     p = np.clip(p, eps, 1.0 - eps)
-    return np.log(p / (1.0 - p))
+    out: np.ndarray = np.log(p / (1.0 - p))
+    return out
 
 
 def load_splat(path: str | Path) -> Cloud:

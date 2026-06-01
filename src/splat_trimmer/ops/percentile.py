@@ -17,7 +17,8 @@ def outlier_mask(
     centroid = pts.mean(axis=0)
     d = np.linalg.norm(pts - centroid, axis=1)
     cutoff = float(np.percentile(d, percentile))
-    return (d <= cutoff).astype(np.bool_)
+    mask: NDArray[np.bool_] = (d <= cutoff).astype(np.bool_)
+    return mask
 
 
 def drop_outliers(cloud: Cloud, percentile: float = 99.0) -> Cloud:

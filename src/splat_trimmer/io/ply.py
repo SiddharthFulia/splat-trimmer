@@ -35,7 +35,7 @@ def load_ply(path: str | Path) -> Cloud:
     dc = _gather(vertex, _field_names("f_dc", 3))
     rest_names = [
         name
-        for name in vertex.data.dtype.names  # type: ignore[union-attr]
+        for name in vertex.data.dtype.names
         if name.startswith("f_rest_")
     ]
     rest_names.sort(key=lambda s: int(s.split("_")[-1]))

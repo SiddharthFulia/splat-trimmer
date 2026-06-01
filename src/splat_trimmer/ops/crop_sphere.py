@@ -14,7 +14,8 @@ def sphere_mask(
     """(N,) bool mask: True where ||p - center|| <= radius."""
     center_a = np.asarray(center, dtype=np.float64).reshape(1, 3)
     d2 = np.sum((np.asarray(positions, dtype=np.float64) - center_a) ** 2, axis=1)
-    return (d2 <= float(radius) ** 2).astype(np.bool_)
+    mask: NDArray[np.bool_] = (d2 <= float(radius) ** 2).astype(np.bool_)
+    return mask
 
 
 def crop_sphere(
